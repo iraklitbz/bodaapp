@@ -1,0 +1,34 @@
+{
+  "name": "boda-elena-gusi",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@formkit/i18n": "^1.5.9",
+    "@formkit/nuxt": "^1.5.9",
+    "@formkit/vue": "^1.5.9",
+    "@nuxt/eslint-config": "^0.2.0",
+    "@nuxtjs/tailwindcss": "^6.11.4",
+    "nuxt": "^3.10.3",
+    "nuxt-icons": "^3.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.3.3",
+    "vue": "^3.4.19",
+    "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.8.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "eslint": "^8.57.0",
+    "nuxt-module-eslint-config": "^0.1.0",
+    "sass": "^1.63.4"
+  }
+}

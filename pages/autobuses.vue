@@ -1,0 +1,30 @@
+<template>
+  <section>
+    <div>
+      <h2
+        class="text-xl mb-4 text-center"
+      >
+        🚌 Autobuses
+      </h2>
+      <p class="mb-5">
+        Habrá servicio de autobuses tanto para la ida como para la vuelta.
+      </p>
+      <ul
+        class="list-disc pl-5 mb-5"
+      >
+        <li class="py-2">
+          Guadalajara-Jadraque-Cutamilla
+        </li>
+        <li class="py-2">
+          Cutamilla-Guadalajara
+        </li>
+        <li class="py-2">
+          Cutamilla-Jadraque
+        </li>
+      </ul>
+      <p class="italic text-sm bg-yellow-50 p-3 rounded-lg">
+        Es muy importante que nos respondáis en el cuestionario para poder planificar el número de autobuses.
+      </p>
+    </div>
+  </section>
+</template>
