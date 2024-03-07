@@ -1,28 +1,18 @@
 <script setup>
-const isFormVisible = ref(false)
-function handleFormInvoke() {
-  isFormVisible.value = !isFormVisible.value
-  document.body.classList.add('overflow-hidden')
-}
-function handleRemoveInvoke() {
-  isFormVisible.value = false
-  document.body.classList.remove('overflow-hidden')
-}
+import { modal } from '~/store/modal'
 </script>
 
 <template>
   <div>
     <HeaderComponent
-      class="fixed top-0 left-0 z-30 w-full bg-gray-100"
-      :active-modal="isFormVisible"
-      @handle-modal="handleRemoveInvoke"
+      class="fixed top-0 left-0 z-30 w-full bg-blue-50"
     />
-    <main class="max-w-2xl mx-auto px-6 md:px-0 pt-40 pb-8">
+    <main class="max-w-2xl mx-auto px-6 md:px-0 pt-48 pb-8">
       <slot />
       <button
-        v-if="!isFormVisible"
-        class="fixed bottom-4 right-4 z-40 p-4 rounded-full shadow-md bg-blue-700"
-        @click="handleFormInvoke()"
+        v-if="!modal().isFormVisible"
+        class="fixed bottom-4 right-4 z-40 p-4 rounded-full shadow-md bg-blue-600 hover:bg-blue-700"
+        @click="modal().handleFormInvoke()"
       >
         <nuxt-icon
           name="pencil"
@@ -31,13 +21,11 @@ function handleRemoveInvoke() {
       </button>
       <transition name="slide-up">
         <div
-          v-if="isFormVisible"
+          v-if="modal().isFormVisible"
           class="fixed top-[85px] left-0 w-full bg-white h-full z-40 pb-20 overflow-y-auto"
         >
           <div class="max-w-2xl mx-auto px-6 md:px-0 pt-8 pb-8 relative">
-            <FormComponent
-              @close-form="handleFormInvoke"
-            />
+            <FormComponent />
           </div>
         </div>
       </transition>

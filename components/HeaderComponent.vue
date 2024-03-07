@@ -1,11 +1,6 @@
 <script setup>
-const props = defineProps({
-  activeModal: {
-    type: Boolean,
-    default: false,
-  },
-})
-const emit = defineEmits(['handle-modal'])
+import { modal } from '~/store/modal'
+
 const navMenu = ref([
   { name: 'Inicio', label: '🎉 Inicio', url: '/' },
   { name: 'findesemana', label: '💍 El fin de semana', url: '/boda' },
@@ -26,23 +21,23 @@ function scrollToNavItem(index) {
       <h1>
         <nuxt-link
           to="/"
-          class="text-2xl font-bold text-center block py-4"
+          class="text-3xl text-center block py-4 special-font"
           @click="scrollToNavItem(0)"
         >
           Elena & Jesús
-          <span class="italic text-center text-sm block">
-            27/07/2024
+          <span class="italic text-center text-lg block">
+            27-07-2024
           </span>
         </nuxt-link>
       </h1>
       <button
-        v-if="props.activeModal"
+        v-if="modal().isFormVisible"
         class="absolute top-1/2 right-10 -translate-y-1/2"
-        @click="emit('handle-modal')"
+        @click="modal().handleRemoveInvoke()"
       >
         <nuxt-icon
           name="x"
-          class="text-red-500 text-3xl"
+          class="text-red-500 text-3xl hover:text-red-600 transition-all ease-in-out duration-3"
         />
       </button>
     </div>
@@ -53,7 +48,7 @@ function scrollToNavItem(index) {
         class="bg-white shadow-md overflow-x-auto relative nav-menu"
       >
         <ul
-          class="flex items-center w-full gap-7 "
+          class="flex items-center md:justify-center w-full gap-7"
         >
           <li
             v-for="(item, index) in navMenu"
@@ -61,7 +56,7 @@ function scrollToNavItem(index) {
           >
             <nuxt-link
               :to="item.url"
-              class="whitespace-nowrap py-3 inline-block"
+              class="whitespace-nowrap py-3 inline-block hover:text-blue-700 transition-colors duration-300 ease-in-out"
               :class="[
                 index === 0 ? 'pl-8' : '',
                 index === navMenu.length - 1 ? 'pr-16' : '',

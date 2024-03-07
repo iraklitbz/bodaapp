@@ -1,16 +1,20 @@
+<script setup>
+import { modal } from '~/store/modal'
+</script>
+
 <template>
   <section>
     <div>
-      <img
-        src="/assets/images/retiro.jpg"
-        alt="Pareja"
-        class="w-full rounded-lg mb-5"
-      >
       <h2
-        class="text-xl mb-4 text-center"
+        class="text-3xl mb-10 text-center text-blue-500"
       >
         ¡Hola a todos!
       </h2>
+      <img
+        src="https://akihqkakvkhumzgnzpch.supabase.co/storage/v1/object/public/images/retiro.jpg"
+        alt="Pareja"
+        class="w-full rounded-lg mb-5"
+      >
       <p class="mb-5">
         Nos alegra comunicaros que el próximo 27 de julio de 2024 nos casamos.
       </p>
@@ -21,7 +25,10 @@
         Hemos creado esta página web para que podáis encontrar todos los detalles de nuestra boda.
       </p>
       <p class="mb-5">
-        Os dejamos un breve cuestionario a continuación para que nos ayudéis con la organización del fin de semana.
+        Os dejamos un breve <b
+          class="text-blue-500"
+          @click="modal().handleFormInvoke()"
+        >cuestionario</b> a continuación para que nos ayudéis con la organización del fin de semana.
       </p>
       <p class="mb-5">
         Os esperamos con muchísima ilusión.

@@ -2,7 +2,7 @@
   <section>
     <div>
       <h2
-        class="text-xl mb-4 text-center"
+        class="text-3xl mb-10 text-center text-blue-500"
       >
         🚌 Autobuses
       </h2>
@@ -22,7 +22,7 @@
           Cutamilla-Jadraque
         </li>
       </ul>
-      <p class="italic text-sm bg-yellow-50 p-3 rounded-lg">
+      <p class="italic text-sm bg-yellow-50 p-3 rounded-lg text-yellow-700">
         Es muy importante que nos respondáis en el cuestionario para poder planificar el número de autobuses.
       </p>
     </div>

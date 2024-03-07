@@ -1,8 +1,10 @@
 <script setup>
-const companions = ref([])
+import { lista } from '~/store/formData'
+import { modal } from '~/store/modal'
+
+const supabase = useSupabaseClient()
 const ageOptions = []
-const isAttendingWedding = ref(true)
-const isAttendingPreWedding = ref(null)
+const errorOnForm = ref(false)
 ageOptions.push({
   value: 'Adulto',
   label: 'Soy adulto',
@@ -13,17 +15,34 @@ for (let i = 1; i <= 14; i++) {
     label: i === 1 ? '1 año' : `${i} años`,
   })
 }
-function handleMorePeople() {
-  companions.value.push({ fullname: '', edad: '' })
-}
-function handleRemovePeople(index) {
-  companions.value.splice(index, 1)
+async function handleFormSend() {
+  const { error } = await supabase.from('listboda').insert([
+    {
+      name: lista().formData.name,
+      surname: lista().formData.surname,
+      company: JSON.stringify(lista().formData.company),
+      isAttendingWedding: lista().formData.isAttendingWedding,
+      isAttendingPreWedding: lista().formData.isAttendingPreWedding,
+      alojamiento: lista().formData.alojamiento,
+      autobus: lista().formData.autobus,
+    },
+  ])
+  if (error === null) {
+    lista().handleEmptyData()
+    modal().handleRemoveInvoke()
+    navigateTo('/gracias')
+  }
+  else {
+    errorOnForm.value = true
+  }
 }
 </script>
 
 <template>
   <div>
     <FormKit
+      id="mainForm"
+      v-model="lista().formData"
       type="form"
       submit-label="Enviar"
       @submit="handleFormSend()"
@@ -32,6 +51,7 @@ function handleRemovePeople(index) {
         class="flex gap-4 w-full"
       >
         <FormKit
+          id="name"
           name="name"
           placeholder="Rafael"
           type="text"
@@ -43,6 +63,7 @@ function handleRemovePeople(index) {
           :validation-messages="{ required: 'Requerido' }"
         />
         <FormKit
+          id="surname"
           name="surname"
           placeholder="Nadal"
           type="text"
@@ -52,7 +73,7 @@ function handleRemovePeople(index) {
         />
       </div>
       <div
-        v-for="(person, index) in companions"
+        v-for="(person, index) in lista().formData.company"
         :key="index"
         class="flex"
       >
@@ -60,6 +81,7 @@ function handleRemovePeople(index) {
           class="grid grid-cols-[60%,35%] gap-4 w-full"
         >
           <FormKit
+            :id="`${index}-fullname`"
             v-model="person.fullname"
             type="text"
             placeholder="Rafael Nadal"
@@ -68,11 +90,11 @@ function handleRemovePeople(index) {
             :validation-messages="{ required: 'Requerido' }"
           />
           <FormKit
+            :id="`${index}-age`"
             v-model="person.edad"
             placeholder="Niños solo"
             type="select"
             label="Edad"
-            name="age"
             :options="ageOptions"
           >
             <template #selectIcon>
@@ -88,15 +110,15 @@ function handleRemovePeople(index) {
         >
           <nuxt-icon
             name="minus"
-            class="cursor-pointer text-red-600"
-            @click="() => handleRemovePeople(index)"
+            class="cursor-pointer text-red-500 hover:text-red-600 transition-all ease-in-out duration-3"
+            @click="lista().handleRemovePeople(index)"
           />
         </div>
       </div>
       <button
         type="button"
-        class="mt-0 mb-10 w-full bg-gray-300 px-3 text-gray-800 text-base py-2 rounded-md transition-colors duration-300 ease-in-out"
-        @click="handleMorePeople()"
+        class="mt-0 mb-10 w-full bg-gray-200 text-blue-500 hover:bg-gray-300 px-3 text-base py-2 rounded-md transition-colors duration-300 ease-in-out"
+        @click="lista().handleMorePeople()"
       >
         + añadir persona
       </button>
@@ -104,7 +126,8 @@ function handleRemovePeople(index) {
         class="mb-10"
       >
         <FormKit
-          v-model="isAttendingWedding"
+          id="isAttendingWedding"
+          name="isAttendingWedding"
           type="radio"
           label="¿Vendrás a nuestra boda el sábado 27 de julio?"
           :options="[
@@ -126,13 +149,14 @@ function handleRemovePeople(index) {
         </FormKit>
       </div>
       <div
-        v-if="isAttendingWedding"
+        v-if="lista().formData.isAttendingWedding"
       >
         <div
           class="mb-10"
         >
           <FormKit
-            v-model="isAttendingPreWedding"
+            id="isAttendingPreWedding"
+            name="isAttendingPreWedding"
             type="radio"
             label="¿Vendrás a nuestra preboda el viernes?"
             :options="[
@@ -157,7 +181,9 @@ function handleRemovePeople(index) {
           class="mb-10"
         >
           <FormKit
+            id="alojamiento"
             type="radio"
+            name="alojamiento"
             label="Alojamiento: ¿Querrás alojarte alguno de los dos días en Jadraque o alrededores?"
             :options="[
               { label: 'Sí, viernes y sábado', value: 'Viernes y sabado' },
@@ -183,6 +209,8 @@ function handleRemovePeople(index) {
           class="mb-10"
         >
           <FormKit
+            id="autobus"
+            name="autobus"
             type="radio"
             label="Uso de servicio de autobuses"
             :options="[
@@ -204,13 +232,17 @@ function handleRemovePeople(index) {
               />
             </template>
           </FormKit>
-          <span
-            class="text-sm text-gray-600 italic leading-0 block"
-          >
+          <span class="italic text-sm bg-yellow-50 p-3 rounded-lg text-yellow-700 leading-0 block">
             *Los horarios de los autobuses os los facilitaremos más adelante.
           </span>
         </div>
       </div>
     </FormKit>
+    <div
+      v-if="errorOnForm"
+      class="text-red-500 text-center"
+    >
+      Ha habido un error al enviar el formulario. Por favor, inténtalo de nuevo.
+    </div>
   </div>
 </template>
