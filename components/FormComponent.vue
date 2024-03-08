@@ -217,7 +217,6 @@ async function handleFormSend() {
               { label: 'Guadalajara – Jadraque – Cutamilla – Guadalajara', value: 'Guadalajara – Jadraque – Cutamilla – Guadalajara' },
               { label: 'Jadraque - Cutamilla – Jadraque', value: 'Jadraque - Cutamilla – Jadraque' },
               { label: 'Iré por mi cuenta', value: 'Iré por mi cuenta' },
-              { label: 'Me vuelvo en autobús.', value: 'Me vuelvo en autobús' },
             ]"
             :classes="{
               decorator: 'w-4 h-4 peer-checked:bg-blue-600 flex items-center justify-center',
