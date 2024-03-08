@@ -110,7 +110,7 @@ async function handleFormSend() {
         >
           <nuxt-icon
             name="minus"
-            class="cursor-pointer text-red-500 hover:text-red-600 transition-all ease-in-out duration-3"
+            class="cursor-pointer text-red-500 hover:text-red-600 text-xl transition-all ease-in-out duration-3"
             @click="lista().handleRemovePeople(index)"
           />
         </div>

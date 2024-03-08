@@ -11,12 +11,12 @@ import { modal } from '~/store/modal'
       <slot />
       <button
         v-if="!modal().isFormVisible"
-        class="fixed bottom-4 right-4 z-40 p-4 rounded-full shadow-md bg-blue-600 hover:bg-blue-700"
+        class="fixed bottom-4 right-4 z-40 p-5 rounded-full shadow-md bg-blue-600 hover:bg-blue-700"
         @click="modal().handleFormInvoke()"
       >
         <nuxt-icon
           name="pencil"
-          class="text-white text-xl"
+          class="text-white text-3xl"
         />
       </button>
       <transition name="slide-up">

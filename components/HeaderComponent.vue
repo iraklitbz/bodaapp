@@ -37,7 +37,7 @@ function scrollToNavItem(index) {
       >
         <nuxt-icon
           name="x"
-          class="text-red-500 text-3xl hover:text-red-600 transition-all ease-in-out duration-3"
+          class="text-red-500 text-4xl hover:text-red-600 transition-all ease-in-out duration-3"
         />
       </button>
     </div>
